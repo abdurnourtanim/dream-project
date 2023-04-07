@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import addUserIcon from "../assets/image/add_user.png";
 import githubIcon from "../assets/image/github.svg";
 import googleIcon from "../assets/image/google.svg";
 import Button from "./Button";
@@ -32,45 +31,81 @@ const SignupForm = () => {
           </div>
 
           <div className="mx-auto max-w-xs">
-            <InputBox type="text" placeholder="Your name" />
-            <InputBox
-              type="email"
-              placeholder="admin@gmail.com"
-              className="mt-3"
-            />
-            <InputBox type="password" placeholder="********" className="mt-3" />
+            <form>
+              <InputBox required type="text" placeholder="Your name" />
+              <InputBox
+                required
+                type="email"
+                placeholder="admin@gmail.com"
+                className="mt-3"
+              />
+              <InputBox
+                required
+                type="password"
+                placeholder="********"
+                className="mt-3"
+              />
 
-            <div className="mt-2 ml-auto w-fit">
-              <Link
-                to="/reset"
-                className="text-xs font-display font-semibold text-indigo-600 hover:text-indigo-800 cursor-pointer dark:text-gray-100s"
-              >
-                Forgot Password?
-              </Link>
-            </div>
+              <div className="mt-2 ml-auto w-fit">
+                <Link
+                  to="/reset"
+                  className="text-xs font-display font-semibold text-indigo-600 hover:text-indigo-800 dark:hover:text-gray-200 cursor-pointer dark:text-gray-100"
+                >
+                  Forgot Password?
+                </Link>
+              </div>
 
-            <Button className="mt-5">
-              <img className="w-8" src={addUserIcon} alt="one" />
-              <span className="ml-3"> Sign Up </span>
-            </Button>
+              <div className="flex items-center">
+                <input
+                  required
+                  id="link-checkbox"
+                  type="checkbox"
+                  value=""
+                  className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
+                />
+                <label
+                  htmlFor="link-checkbox"
+                  className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                >
+                  {"I agree with the "}
+                  <Link
+                    to="/terms"
+                    className="text-blue-600 dark:text-blue-500 hover:underline"
+                  >
+                    terms and conditions
+                  </Link>
+                  .
+                </label>
+              </div>
+
+              <Button className="mt-5">
+                <span className="ml-3"> {" Sign Up"} </span>
+              </Button>
+            </form>
             <div className="mt-5 text-sm font-display font-semibold text-gray-700 text-center dark:text-gray-100">
               Don't have an account ?
               <Link
-                className="cursor-pointer text-indigo-600 hover:text-indigo-800"
+                className="cursor-pointer text-indigo-600 hover:text-indigo-800 dark:text-gray-100 dark:hover:text-gray-200"
                 to="/login"
               >
-                Login
+                {" Login"}
               </Link>
             </div>
             <p className="mt-6 text-xs text-gray-600 text-center dark:text-gray-100">
               I agree to abide by templatana's
-              <a href="/" className="border-b border-gray-500 border-dotted">
+              <Link
+                to="/terms"
+                className="border-b border-gray-500 border-dotted"
+              >
                 Terms of Service
-              </a>
+              </Link>
               and its
-              <a href="/" className="border-b border-gray-500 border-dotted">
+              <Link
+                to="/privacy"
+                className="border-b border-gray-500 border-dotted"
+              >
                 Privacy Policy
-              </a>
+              </Link>
             </p>
           </div>
         </div>

@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import addUserIcon from "../assets/image/add_user.png";
 import githubIcon from "../assets/image/github.svg";
 import googleIcon from "../assets/image/google.svg";
 import Button from "./Button";
@@ -32,40 +31,73 @@ const LoginForm = () => {
           </div>
 
           <div className="mx-auto max-w-xs">
-            <InputBox type="email" placeholder="admin@gmail.com" />
-            <InputBox type="password" placeholder="********" className="mt-5" />
+            <form>
+              <InputBox required type="email" placeholder="admin@gmail.com" />
+              <InputBox
+                required
+                type="password"
+                placeholder="********"
+                className="mt-5"
+              />
 
-            <div className="mt-2 ml-auto w-fit">
-              <Link
-                to="/reset"
-                className="text-xs font-display font-semibold text-indigo-600 hover:text-indigo-800 cursor-pointer dark:text-gray-100"
-              >
-                Forgot Password?
-              </Link>
-            </div>
+              <div className="flex items-center mt-3">
+                <div className="flex items-start">
+                  <div className="flex items-center h-5">
+                    <input
+                      id="remember"
+                      aria-describedby="remember"
+                      type="checkbox"
+                      className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
+                    />
+                  </div>
+                  <div className="ml-3 text-sm">
+                    <label
+                      htmlFor="remember"
+                      className="text-gray-500 dark:text-gray-300"
+                    >
+                      Remember me
+                    </label>
+                  </div>
+                </div>
 
-            <Button className="mt-5">
-              <img className="w-8" src={addUserIcon} alt="one" />
-              <span className="ml-3  dark:text-gray-100"> Login </span>
-            </Button>
+                <div className=" ml-auto w-fit">
+                  <Link
+                    to="/reset"
+                    className="text-xs font-display font-semibold text-indigo-600 hover:text-indigo-800 dark:hover:text-gray-200 cursor-pointer dark:text-gray-100"
+                  >
+                    Forgot Password?
+                  </Link>
+                </div>
+              </div>
+
+              <Button className="mt-5">
+                <span className="ml-3  dark:text-gray-100"> Login </span>
+              </Button>
+            </form>
             <div className="mt-5 text-sm font-display font-semibold text-gray-700 text-center dark:text-gray-100">
               Don't have an account ?
               <Link
-                className="cursor-pointer text-indigo-600 hover:text-indigo-800 "
+                className="cursor-pointer text-indigo-600 hover:text-indigo-800 dark:text-gray-100 dark:hover:text-gray-200"
                 to="/signup"
               >
-                Sign up
+                {" Sign up"}
               </Link>
             </div>
             <p className="mt-6 text-xs text-gray-600 text-center dark:text-gray-100">
               I agree to abide by templatana's
-              <a href="/" className="border-b border-gray-500 border-dotted ">
+              <Link
+                to="/terms"
+                className="border-b border-gray-500 border-dotted "
+              >
                 Terms of Service
-              </a>
+              </Link>
               and its
-              <a href="/" className="border-b border-gray-500 border-dotted">
+              <Link
+                to="/privacy"
+                className="border-b border-gray-500 border-dotted"
+              >
                 Privacy Policy
-              </a>
+              </Link>
             </p>
           </div>
         </div>

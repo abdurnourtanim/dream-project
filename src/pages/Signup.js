@@ -5,7 +5,7 @@ import SignupForm from "../components/SignupForm";
 const Signup = () => {
   return (
     <section className="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 flex justify-center">
-      <div className="max-w-screen-xl m-0 sm:m-20 bg-white dark:bg-gray-800 shadow sm:rounded-lg flex justify-center flex-1">
+      <div className="max-w-screen-xl m-0 sm:m-10 bg-white dark:bg-gray-800 shadow sm:rounded-lg flex justify-center flex-1">
         {/* form content  */}
         <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-12">
           {/* logo  */}
