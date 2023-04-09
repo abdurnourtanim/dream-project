@@ -1,7 +1,7 @@
 import React from "react";
+import { AiFillGithub, AiOutlineUserAdd } from "react-icons/ai";
+import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
-import githubIcon from "../assets/image/github.svg";
-import googleIcon from "../assets/image/google.svg";
 import Button from "./Button";
 import InputBox from "./InputBox";
 import LoginByApp from "./LoginByApp";
@@ -16,9 +16,9 @@ const LoginForm = () => {
         <div className="w-full flex-1 mt-8">
           {/* login by another app  */}
           <div className="flex flex-col items-center">
-            <LoginByApp icon={googleIcon} text="Login with Google" />
+            <LoginByApp icon={FcGoogle} text="Login with Google" />
             <LoginByApp
-              icon={githubIcon}
+              icon={AiFillGithub}
               text="Login with GitHub"
               className="mt-3"
             />
@@ -71,6 +71,7 @@ const LoginForm = () => {
               </div>
 
               <Button className="mt-5">
+                <AiOutlineUserAdd className="text-2xl" />
                 <span className="ml-3  dark:text-gray-100"> Login </span>
               </Button>
             </form>

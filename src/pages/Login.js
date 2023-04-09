@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import LoginForm from "../components/LoginForm";
 import Logo from "../components/Logo";
 
@@ -9,7 +10,9 @@ const Login = () => {
         {/* form content  */}
         <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-12">
           {/* logo  */}
-          <Logo />
+          <Link to="/">
+            <Logo className="hover:cursor-pointer" />
+          </Link>
           {/* form  */}
           <LoginForm />
         </div>

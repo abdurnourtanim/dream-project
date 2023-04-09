@@ -1,45 +1,89 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { FaBars } from "react-icons/fa";
+import { GrClose } from "react-icons/gr";
+import { MdDarkMode, MdOutlineLightMode } from "react-icons/md";
 import { Link } from "react-router-dom";
-import userImg from "../assets/image/dashboard/team-2.jpg";
 import Logo from "./Logo";
 
 const Navbar = () => {
-  const user = true;
+  const [toggleDropdown, setToggleDropdowwn] = useState(false);
+  const [toggleIcon, setToggleIcon] = useState(false);
+
+  const user = false;
+  const userImg = "https://avatars.githubusercontent.com/u/71883296?v=4";
+
+  const chageTheme = () => {
+    setToggleIcon(!toggleIcon);
+
+    if (toggleIcon) {
+      localStorage.setItem("theme", "light");
+    } else {
+      localStorage.setItem("theme", "dark");
+    }
+  };
+
+  useEffect(() => {
+    if (localStorage.getItem("theme") === null) {
+      localStorage.setItem("theme", "light");
+    }
+  }, []);
+
+  useEffect(() => {
+    if (localStorage.getItem("theme") === "dark") {
+      document.body.classList.add("dark");
+    } else {
+      document.body.classList.remove("dark");
+    }
+  }, [toggleIcon]);
+
+  console.log(toggleIcon);
 
   return (
-    <nav className="bg-indigo-100 dark:bg-gray-800 fixed w-full z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <Link to="/">
-          <Logo className="flex items-center" />
-        </Link>
+    <nav className=" md:px-20 px-0 bg-indigo-100 dark:bg-gray-800 fixed w-full z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600 ">
+      <div className="max-w-screen-xl flex flex-row flex-wrap items-center justify-between mx-auto p-0 ">
+        <div className="flex items-center w-full md:w-fit justify-between p-4">
+          <Link to="/" className="hover:cursor-pointer ">
+            <Logo className="flex items-center " />
+          </Link>
 
-        <div className="flex md:order-2">
-          {user ? (
-            <Link
-              to="/profile"
-              className="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
-            >
-              <span className="sr-only">Open user menu</span>
-              <img
-                className="w-10 h-10 rounded-full"
-                src={userImg}
-                alt="user"
+          <div className="flex ">
+            {localStorage.getItem("theme") === "dark" ? (
+              <button
+                onClick={chageTheme}
+                className=" hover:cursor-pointer visible md:hidden"
+              >
+                <MdOutlineLightMode className="text-3xl text-white " />
+              </button>
+            ) : (
+              <button
+                onClick={chageTheme}
+                className=" hover:cursor-pointer visible md:hidden"
+              >
+                <MdDarkMode className="text-3xl " />
+              </button>
+            )}
+
+            {!toggleDropdown ? (
+              <FaBars
+                onClick={() => setToggleDropdowwn(!toggleDropdown)}
+                className="text-3xl text-black dark:text-indigo-100 visible md:hidden ml-4 hover:cursor-pointer"
               />
-            </Link>
-          ) : (
-            <Link
-              to="/login"
-              className="text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 dark:bg-indigo-600 dark:hover:bg-ingido-700 dark:focus:ring-indigo-800"
-            >
-              Get started
-            </Link>
-          )}
+            ) : (
+              <GrClose
+                onClick={() => setToggleDropdowwn(!toggleDropdown)}
+                className="text-3xl text-black dark:text-indigo-100 visible md:hidden ml-4 hover:cursor-pointer"
+              />
+            )}
+          </div>
         </div>
+
+        {/* nav menu*/}
         <div
-          className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
-          id="navbar-sticky"
+          className={` items-center justify-between  w-full md:w-auto md:order-1 relative md:flex ${
+            !toggleDropdown && "hidden"
+          }`}
         >
-          <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-indigo-100 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-indigo-100 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+          <ul className="flex flex-col absolute  md:relative w-full  p-6 md:p-0 mt-0 border-t-2 border-purple-300 font-medium border  rounded-none bg-indigo-100 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-indigo-100 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700 ">
             <li>
               <Link
                 to="/"
@@ -52,7 +96,7 @@ const Navbar = () => {
             <li>
               <Link
                 to="/about"
-                className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 "
               >
                 About
               </Link>
@@ -73,7 +117,73 @@ const Navbar = () => {
                 Contact
               </Link>
             </li>
+            <li>
+              <Link
+                to="/login"
+                className="mt-2 text-1xl py-2 pl-3 pr-4 text-black dark:text-indigo-100 hover:text-indigo-100 transition ease-in-out bg-gray-100 hover:bg-indigo-700  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg  px-4 text-center mr-0 dark:bg-gray-800 dark:border dark:border-indigo-100 dark:hover:bg-ingido-700 dark:focus:ring-indigo-800 block md:hidden"
+              >
+                Get started
+              </Link>
+            </li>
           </ul>
+        </div>
+
+        <div className="flex md:order-2">
+          {user ? (
+            <div className="flex items-center ">
+              {localStorage.getItem("theme") === "dark" ? (
+                <button
+                  onClick={chageTheme}
+                  className="mr-3 hover:cursor-pointer hidden md:flex"
+                >
+                  <MdOutlineLightMode className="text-3xl text-white " />
+                </button>
+              ) : (
+                <button
+                  onClick={chageTheme}
+                  className="mr-3 hover:cursor-pointer hidden md:flex"
+                >
+                  <MdDarkMode className="text-3xl text-black" />
+                </button>
+              )}
+
+              <Link
+                to="/profile"
+                className="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+              >
+                <img
+                  className="w-10 h-10 rounded-full"
+                  src={userImg}
+                  alt="user"
+                />
+              </Link>
+            </div>
+          ) : (
+            <div className="flex items-center ">
+              {localStorage.getItem("theme") === "dark" ? (
+                <button
+                  onClick={chageTheme}
+                  className="mr-3 hover:cursor-pointer hidden md:flex"
+                >
+                  <MdOutlineLightMode className="text-3xl text-white" />
+                </button>
+              ) : (
+                <button
+                  onClick={chageTheme}
+                  className="mr-3 hover:cursor-pointer  hidden md:flex "
+                >
+                  <MdDarkMode className="text-3xl " />
+                </button>
+              )}
+
+              <Link
+                to="/login"
+                className="text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-0 dark:bg-indigo-600 dark:hover:bg-ingido-700 dark:focus:ring-indigo-800 hidden md:flex"
+              >
+                Get started
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </nav>
