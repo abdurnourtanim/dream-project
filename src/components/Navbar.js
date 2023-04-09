@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FaBars } from "react-icons/fa";
-import { GrClose } from "react-icons/gr";
-import { MdDarkMode, MdOutlineLightMode } from "react-icons/md";
+import { MdClose, MdDarkMode, MdOutlineLightMode } from "react-icons/md";
 import { Link } from "react-router-dom";
 import Logo from "./Logo";
 
@@ -69,9 +68,9 @@ const Navbar = () => {
                 className="text-3xl text-black dark:text-indigo-100 visible md:hidden ml-4 hover:cursor-pointer"
               />
             ) : (
-              <GrClose
+              <MdClose
                 onClick={() => setToggleDropdowwn(!toggleDropdown)}
-                className="text-3xl text-black dark:text-indigo-100 visible md:hidden ml-4 hover:cursor-pointer"
+                className="text-3xl text-black dark:text-gray-100 visible md:hidden ml-4 hover:cursor-pointer"
               />
             )}
           </div>
