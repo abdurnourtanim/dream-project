@@ -12,7 +12,7 @@ const Navbar = () => {
   const active =
     "bg-indigo-800 md:bg-transparent text-white md:text-blue-700 hover:bg-indigo-800 my-2 md:my-0 -mx-2 md:-mx-0";
 
-  const user = false;
+  const user = true;
   const userImg = "https://avatars.githubusercontent.com/u/71883296?v=4";
 
   const chageTheme = () => {
