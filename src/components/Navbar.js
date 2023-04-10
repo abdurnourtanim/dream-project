@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { FaBars } from "react-icons/fa";
 import { MdClose, MdDarkMode, MdOutlineLightMode } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useResolvedPath } from "react-router-dom";
 import Logo from "./Logo";
 
 const Navbar = () => {
   const [toggleDropdown, setToggleDropdowwn] = useState(false);
   const [toggleIcon, setToggleIcon] = useState(false);
+  const { pathname } = useResolvedPath();
+
+  const active =
+    "bg-indigo-800 md:bg-transparent text-white md:text-blue-700 hover:bg-indigo-800 my-2 md:my-0 -mx-2 md:-mx-0";
 
   const user = false;
   const userImg = "https://avatars.githubusercontent.com/u/71883296?v=4";
@@ -34,8 +38,6 @@ const Navbar = () => {
       document.body.classList.remove("dark");
     }
   }, [toggleIcon]);
-
-  console.log(toggleIcon);
 
   return (
     <nav className=" md:px-20 px-0 bg-indigo-100 dark:bg-gray-800 fixed w-full z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600 ">
@@ -86,7 +88,9 @@ const Navbar = () => {
             <li>
               <Link
                 to="/"
-                className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500"
+                className={`block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 ${
+                  pathname === "/" && active
+                }`}
                 aria-current="page"
               >
                 Home
@@ -95,7 +99,9 @@ const Navbar = () => {
             <li>
               <Link
                 to="/about"
-                className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 "
+                className={`block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 ${
+                  pathname === "/about" && active
+                }`}
               >
                 About
               </Link>
@@ -103,7 +109,9 @@ const Navbar = () => {
             <li>
               <Link
                 to="/services"
-                className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                className={`block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 ${
+                  pathname === "/services" && active
+                }`}
               >
                 Services
               </Link>
@@ -111,7 +119,9 @@ const Navbar = () => {
             <li>
               <Link
                 to="/contact"
-                className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                className={`block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 ${
+                  pathname === "/contact" && active
+                }`}
               >
                 Contact
               </Link>
