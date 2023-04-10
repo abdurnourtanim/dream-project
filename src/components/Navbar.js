@@ -47,7 +47,19 @@ const Navbar = () => {
             <Logo className="flex items-center " />
           </Link>
 
-          <div className="flex ">
+          <div className="flex items-center">
+            {user && (
+              <Link
+                to="/profile"
+                className="flex md:hidden mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+              >
+                <img
+                  className="w-10 h-10 rounded-full"
+                  src={userImg}
+                  alt="user"
+                />
+              </Link>
+            )}
             {localStorage.getItem("theme") === "dark" ? (
               <button
                 onClick={chageTheme}
@@ -127,17 +139,31 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
-              <Link
-                to="/login"
-                className="mt-2 text-1xl py-2 pl-3 pr-4 text-black dark:text-indigo-100 hover:text-indigo-100 transition ease-in-out bg-gray-100 hover:bg-indigo-700  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg  px-4 text-center mr-0 dark:bg-gray-800 dark:border dark:border-indigo-100 dark:hover:bg-ingido-700 dark:focus:ring-indigo-800 block md:hidden"
-              >
-                Get started
-              </Link>
+              {user ? (
+                <Link
+                  to="/profile"
+                  className="flex md:hidden bg-indigo-300 rounded-lg p-2 items-center "
+                >
+                  <img
+                    className="w-12 h-12 rounded-full"
+                    src={userImg}
+                    alt="user"
+                  />
+                  <span className="ml-3 font-bold ">Abdur Nour Tanim</span>
+                </Link>
+              ) : (
+                <Link
+                  to="/login"
+                  className="mt-2 text-1xl py-2 pl-3 pr-4 text-black dark:text-indigo-100 hover:text-indigo-100 transition ease-in-out bg-gray-100 hover:bg-indigo-700  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg  px-4 text-center mr-0 dark:bg-gray-800 dark:border dark:border-indigo-100 dark:hover:bg-ingido-700 dark:focus:ring-indigo-800 block md:hidden"
+                >
+                  Get started
+                </Link>
+              )}
             </li>
           </ul>
         </div>
 
-        <div className="flex md:order-2">
+        <div className="flex md:order-1 ">
           {user ? (
             <div className="flex items-center ">
               {localStorage.getItem("theme") === "dark" ? (
@@ -158,7 +184,7 @@ const Navbar = () => {
 
               <Link
                 to="/profile"
-                className="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+                className="hidden md:flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
               >
                 <img
                   className="w-10 h-10 rounded-full"

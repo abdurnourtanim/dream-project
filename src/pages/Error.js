@@ -20,7 +20,7 @@ const Error = () => {
               homepage.
             </p>
 
-            <Button>
+            <Button className="px-4 py-3 w-full">
               <Link to="/">Back to homepage</Link>
             </Button>
           </div>
