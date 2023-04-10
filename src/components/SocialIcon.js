@@ -5,7 +5,7 @@ const SocialIcon = ({ to, className, children }) => {
     <a
       target="_blank"
       href={to}
-      className={`bg-white text-blue-600 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2 p-3 ${className}`}
+      className={`bg-white dark:bg-indigo-100 text-blue-800 dark:text-blue-900 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2 p-3 ${className}`}
       rel="noreferrer"
     >
       {children}

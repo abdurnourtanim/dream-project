@@ -78,7 +78,7 @@ const SignupForm = () => {
                 </label>
               </div>
 
-              <Button className="mt-5">
+              <Button className="mt-5 py-5 w-full">
                 <AiOutlineUserAdd className="text-2xl" />
                 <span className="ml-3"> {" Sign Up"} </span>
               </Button>

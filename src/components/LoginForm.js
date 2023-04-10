@@ -70,7 +70,7 @@ const LoginForm = () => {
                 </div>
               </div>
 
-              <Button className="mt-5">
+              <Button className="mt-5 py-5 w-full">
                 <AiOutlineUserAdd className="text-2xl" />
                 <span className="ml-3  dark:text-gray-100"> Login </span>
               </Button>
