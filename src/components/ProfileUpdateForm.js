@@ -25,7 +25,7 @@ const ProfileUpdateForm = () => {
   };
 
   return (
-    <form id="login">
+    <form>
       <div className="bg-white mt-10 pt-10 dark:bg-gray-800">
         <div className="container mx-auto bg-white dark:bg-gray-800 rounded">
           <div className="mx-auto">
