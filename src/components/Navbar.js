@@ -40,7 +40,7 @@ const Navbar = () => {
   }, [toggleIcon]);
 
   return (
-    <nav className=" md:px-20 px-0 bg-indigo-100 dark:bg-gray-800 fixed w-full z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600 ">
+    <nav className=" md:px-20 px-0 bg-indigo-100 dark:bg-gray-800  fixed w-full z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600 ">
       <div className="max-w-screen-xl flex flex-row flex-wrap items-center justify-between mx-auto p-0 ">
         <div className="flex items-center w-full md:w-fit justify-between p-4">
           <Link to="/" className="hover:cursor-pointer ">
@@ -96,7 +96,7 @@ const Navbar = () => {
             !toggleDropdown && "hidden"
           }`}
         >
-          <ul className="flex flex-col absolute  md:relative w-full  p-6 md:p-0 mt-0 border-t-2 border-purple-300 font-medium border  rounded-none bg-indigo-100 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-indigo-100 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700 ">
+          <ul className="flex flex-col absolute  md:relative w-full  p-6 md:p-0 mt-0 border-t-2 border-purple-300 font-medium border  rounded-none bg-indigo-100 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-indigo-100 dark:bg-gray-800 md:dark:bg-transparent dark:border-gray-700 ">
             <li>
               <Link
                 to="/"

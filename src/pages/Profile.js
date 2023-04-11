@@ -24,7 +24,7 @@ const Profile = () => {
   };
 
   return (
-    <>
+    <div div className="bg-gray-200 dark:bg-gray-800">
       <Navbar />
       <ProfileOverlay />
       <section className="relative py-16 -mt-5 bg-gray-300 dark:bg-gray-900">
@@ -48,7 +48,7 @@ const Profile = () => {
         </div>
       </section>
       <Footer />/
-    </>
+    </div>
   );
 };
 
