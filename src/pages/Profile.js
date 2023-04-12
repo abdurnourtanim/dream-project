@@ -36,7 +36,7 @@ const Profile = () => {
                 <div className="w-full lg:w-4/12 px-0 md:px-4 lg:order-3 lg:text-right lg:self-center">
                   <div className="py-0 md:py-6 px-0 md:px-3 mt-32  sm:mt-0">
                     <Button className="py-2 px-5">
-                      <Link to={`/update`}>Update</Link>
+                      <Link to={`/update`}>Edit Profile</Link>
                     </Button>
                   </div>
                 </div>
