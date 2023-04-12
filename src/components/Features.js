@@ -2,7 +2,7 @@ import React from "react";
 
 const Features = () => {
   return (
-    <div className="container bg-gray-100 dark:bg-gray-800 pb-8 md:pb-10 flex flex-col px-4 mx-auto pt-0 md:pt-32 space-y-12 md:space-y-0 md:flex-row ">
+    <div className="container bg-gray-100 dark:bg-gray-800 pb-8 md:pb-10 flex flex-col px-4 mx-auto pt-16 md:pt-32 space-y-12 md:space-y-0 md:flex-row ">
       {/* What's Different  */}
       <div className="flex flex-col space-y-12 md:w-1/2">
         <h2 className="max-w-md text-4xl  font-bold text-center md:text-left text-black dark:text-white">
