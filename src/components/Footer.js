@@ -76,14 +76,12 @@ export default function Footer() {
                       </Link>
                     </li>
                     <li>
-                      <a
+                      <Link
                         className="text-gray-700 dark:text-gray-300  hover:text-gray-900 dark:hover:text-gray-100 font-semibold block pb-2 text-sm"
-                        href="https://github.com/abdurnourtanim"
-                        target="_blank"
-                        rel="noreferrer"
+                        to="/FAQ"
                       >
-                        Github
-                      </a>
+                        FAQ
+                      </Link>
                     </li>
                     <li>
                       <Link

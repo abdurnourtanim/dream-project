@@ -26,7 +26,7 @@ const ProfileUpdateForm = () => {
 
   return (
     <form>
-      <div className="bg-white mt-10 pt-10 dark:bg-gray-800">
+      <div className="bg-white px-0 lg:px-16 mt-10 pt-10 dark:bg-gray-800">
         <div className="container mx-auto bg-white dark:bg-gray-800 rounded">
           <div className="mx-auto">
             <div className="xl:w-9/12 w-11/12 mx-auto xl:mx-0">
@@ -123,7 +123,7 @@ const ProfileUpdateForm = () => {
             </div>
           </div>
         </div>
-        <div className="container  mx-auto bg-white dark:bg-gray-800 mt-10 rounded px-4 md:px-10">
+        <div className="container  mx-auto bg-white dark:bg-gray-800 mt-10 rounded px-4 md:px-10 lg:px-0">
           <div className="xl:w-full border-b border-gray-300 dark:border-gray-700 py-5">
             <div className="flex w-11/12 mx-auto xl:w-full xl:mx-0 items-center">
               <p className="text-lg text-gray-800 dark:text-gray-100 font-bold">

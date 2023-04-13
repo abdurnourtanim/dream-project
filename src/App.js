@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Signup from "./pages/Signup";
 import Update from "./pages/Update";
+import FAQ from "./pages/link/FAQ";
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
         <Route element={<Update />} path="/update" />
         <Route element={<BlogDetails />} path="/blog-details" />
         <Route element={<Blog />} path="/blog" />
+        <Route element={<FAQ />} path="/FAQ" />
         <Route element={<Home />} path="/" />
         <Route element={<Error />} path="*" />
       </Routes>
