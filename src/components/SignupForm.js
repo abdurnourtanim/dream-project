@@ -6,7 +6,9 @@ import Button from "./Button";
 import InputBox from "./InputBox";
 import LoginByApp from "./LoginByApp";
 
-const SignupForm = () => {
+const SignupForm = ({ signupState }) => {
+  const { submitHandler, form, setForm, error, loading } = signupState;
+
   return (
     <div>
       <div className="mt-5 flex flex-col items-center">
@@ -31,18 +33,56 @@ const SignupForm = () => {
           </div>
 
           <div className="mx-auto max-w-xs">
-            <form>
-              <InputBox required type="text" placeholder="Your name" />
+            <form onSubmit={submitHandler}>
               <InputBox
                 required
+                value={form.name}
+                onChange={(e) => {
+                  setForm({
+                    ...form,
+                    name: e.target.value,
+                  });
+                }}
+                type="text"
+                placeholder="Your name"
+              />
+              <InputBox
+                required
+                value={form.email}
+                onChange={(e) => {
+                  setForm({
+                    ...form,
+                    email: e.target.value,
+                  });
+                }}
                 type="email"
                 placeholder="admin@gmail.com"
                 className="mt-3"
               />
               <InputBox
                 required
+                value={form.password}
+                onChange={(e) => {
+                  setForm({
+                    ...form,
+                    password: e.target.value,
+                  });
+                }}
                 type="password"
-                placeholder="********"
+                placeholder="Password"
+                className="mt-3"
+              />
+              <InputBox
+                required
+                value={form.confirmPassword}
+                onChange={(e) => {
+                  setForm({
+                    ...form,
+                    confirmPassword: e.target.value,
+                  });
+                }}
+                type="password"
+                placeholder="Confirm Password"
                 className="mt-3"
               />
 
@@ -78,10 +118,21 @@ const SignupForm = () => {
                 </label>
               </div>
 
-              <Button className="mt-5 py-5 w-full">
+              <Button
+                disabled={loading && true}
+                type="submit"
+                className="mt-5 py-5 w-full "
+              >
                 <AiOutlineUserAdd className="text-2xl" />
-                <span className="ml-3"> {" Sign Up"} </span>
+                <span className="ml-3">
+                  {loading ? "Loading..." : "Signup"}{" "}
+                </span>
               </Button>
+              {error && (
+                <div className="bg-red-300 text-black py-3 mt-3 text-center rounded">
+                  {error}
+                </div>
+              )}
             </form>
             <div className="mt-5 text-sm font-display font-semibold text-gray-700 text-center dark:text-gray-100">
               Don't have an account ?

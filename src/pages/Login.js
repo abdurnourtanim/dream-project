@@ -1,9 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import loginSvg from "../assets/image/login.svg";
 import LoginForm from "../components/LoginForm";
 import Navbar from "../components/Navbar";
+import { login } from "../services/auth.service";
 
 const Login = () => {
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
+  const [error, setError] = useState();
+  const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    const user = {
+      email: form.email,
+      password: form.password,
+    };
+
+    await login(user)
+      .then((res) => {
+        console.log(res);
+        navigate("/profile");
+      })
+      .catch((err) => {
+        console.log(err);
+        setError(err.data.err);
+      });
+    setLoading(false);
+  };
+
+  const loginState = {
+    form,
+    setForm,
+    error,
+    submitHandler,
+    loading,
+  };
+
   return (
     <>
       <Navbar />
@@ -12,7 +52,7 @@ const Login = () => {
           {/* form content  */}
           <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-12">
             {/* form  */}
-            <LoginForm />
+            <LoginForm loginState={loginState} />
           </div>
           {/* illustration  */}
           <div className="flex-1 bg-indigo-100 dark:bg-indigo-950 text-center hidden lg:flex">

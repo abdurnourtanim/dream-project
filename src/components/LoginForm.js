@@ -6,7 +6,9 @@ import Button from "./Button";
 import InputBox from "./InputBox";
 import LoginByApp from "./LoginByApp";
 
-const LoginForm = () => {
+const LoginForm = ({ loginState }) => {
+  const { form, setForm, error, submitHandler, loading } = loginState;
+
   return (
     <div>
       <div className="mt-5 flex flex-col items-center">
@@ -31,13 +33,31 @@ const LoginForm = () => {
           </div>
 
           <div className="mx-auto max-w-xs">
-            <form>
-              <InputBox required type="email" placeholder="admin@gmail.com" />
+            <form onSubmit={submitHandler}>
+              <InputBox
+                required
+                type="email"
+                placeholder="admin@gmail.com"
+                value={form.email}
+                onChange={(e) => {
+                  setForm({
+                    ...form,
+                    email: e.target.value,
+                  });
+                }}
+              />
               <InputBox
                 required
                 type="password"
                 placeholder="********"
                 className="mt-5"
+                value={form.password}
+                onChange={(e) => {
+                  setForm({
+                    ...form,
+                    password: e.target.value,
+                  });
+                }}
               />
 
               <div className="flex items-center mt-3">
@@ -70,10 +90,21 @@ const LoginForm = () => {
                 </div>
               </div>
 
-              <Button className="mt-5 py-5 w-full">
+              <Button
+                disabled={loading && true}
+                type="submit"
+                className="mt-5 py-5 w-full"
+              >
                 <AiOutlineUserAdd className="text-2xl" />
-                <span className="ml-3  dark:text-gray-100"> Login </span>
+                <span className="ml-3  dark:text-gray-100">
+                  {loading ? "Loading..." : "Login"}{" "}
+                </span>
               </Button>
+              {error && (
+                <div className="bg-red-300 text-black py-3 mt-3 text-center rounded">
+                  {error}
+                </div>
+              )}
             </form>
             <div className="mt-5 text-sm font-display font-semibold text-gray-700 text-center dark:text-gray-100">
               Don't have an account ?
