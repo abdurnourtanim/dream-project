@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
@@ -10,6 +10,24 @@ import UserDetails from "../components/profile/UserDetails";
 import { logout } from "../services/auth.service";
 
 const Profile = () => {
+  const navigate = useNavigate();
+
+  const route = () => {
+    const token = localStorage.getItem("x-access-token");
+    return token ? true : false;
+  };
+
+  useEffect(() => {
+    if (!route()) {
+      navigate("/");
+    }
+  }, [navigate]);
+
+  const logoutHandler = () => {
+    logout();
+    navigate("/login");
+  };
+
   const user = {
     userphoto: "https://avatars.githubusercontent.com/u/71883296?v=4",
     name: "Abdur Nour Tanim",
@@ -39,7 +57,10 @@ const Profile = () => {
                     <Button className="py-2 px-5">
                       <Link to={`/update`}>Edit Profile</Link>
                     </Button>
-                    <Button onClick={logout} className="py-2 px-5 ml-0 md:ml-5">
+                    <Button
+                      onClick={logoutHandler}
+                      className="py-2 px-5 ml-0 md:ml-5"
+                    >
                       <Link to={`/profile`}>Logout</Link>
                     </Button>
                   </div>

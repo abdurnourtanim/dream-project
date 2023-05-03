@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import loginSvg from "../assets/image/login.svg";
 import LoginForm from "../components/LoginForm";
@@ -14,6 +14,17 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+
+  const route = () => {
+    const token = localStorage.getItem("x-access-token");
+    return token ? true : false;
+  };
+
+  useEffect(() => {
+    if (route()) {
+      navigate("/");
+    }
+  }, [navigate]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
