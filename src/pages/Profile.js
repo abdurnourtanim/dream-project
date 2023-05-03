@@ -7,6 +7,7 @@ import ProfileOverlay from "../components/profile/ProfileOverlay";
 import UserAvatar from "../components/profile/UserAvatar";
 import UserBio from "../components/profile/UserBio";
 import UserDetails from "../components/profile/UserDetails";
+import { logout } from "../services/auth.service";
 
 const Profile = () => {
   const user = {
@@ -33,10 +34,13 @@ const Profile = () => {
             <div className="px-6">
               <div className="flex flex-wrap justify-center">
                 <UserAvatar userPhoto={user.userphoto} />
-                <div className="w-full lg:w-4/12 px-0 md:px-4 lg:order-3 lg:text-right lg:self-center">
-                  <div className="py-0 md:py-6 px-0 md:px-3 mt-32  sm:mt-0">
+                <div className="md:flex w-full lg:w-4/12 px-0 md:px-4 lg:order-3 lg:text-right lg:self-center">
+                  <div className="flex  justify-between py-0 md:py-6 px-0 md:px-3 mt-32  sm:mt-10">
                     <Button className="py-2 px-5">
                       <Link to={`/update`}>Edit Profile</Link>
+                    </Button>
+                    <Button onClick={logout} className="py-2 px-5 ml-0 md:ml-5">
+                      <Link to={`/profile`}>Logout</Link>
                     </Button>
                   </div>
                 </div>

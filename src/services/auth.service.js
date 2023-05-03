@@ -21,6 +21,9 @@ const login = (newUser) => {
     .post(`${baseURL}/login`, newUser)
     .then((response) => {
       if (response) {
+        const token = response.data.token;
+        localStorage.setItem("x-access-token", token);
+
         return Promise.resolve(response);
       }
     })
@@ -29,4 +32,10 @@ const login = (newUser) => {
     });
 };
 
-export { signup, login };
+// logout user
+const logout = () => {
+  localStorage.removeItem("x-access-token");
+  return { msg: "Logout successfull." };
+};
+
+export { signup, login, logout };
