@@ -44,7 +44,7 @@ const Signup = () => {
       .then(async (res) => {
         console.log(res);
         await login(newUser)
-          .then((res) => navigate("/profile"))
+          .then((res) => navigate("/"))
           .catch((err) => console.log(err));
       })
       .catch((err) => {

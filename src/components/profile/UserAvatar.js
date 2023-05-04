@@ -12,7 +12,7 @@ const UserAvatar = ({ userPhoto }) => {
             style={{ maxWidth: "150px" }}
           />
         </label>
-        <input type="file" name="profile" id="profile" hidden />
+        {/* <input type="file" name="profile" id="profile" hidden /> */}
       </div>
     </div>
   );

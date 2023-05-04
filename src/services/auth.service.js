@@ -22,7 +22,9 @@ const login = (newUser) => {
     .then((response) => {
       if (response) {
         const token = response.data.token;
+        const userId = response.data.user._id;
         localStorage.setItem("x-access-token", token);
+        localStorage.setItem("userId", userId);
 
         return Promise.resolve(response);
       }
@@ -35,6 +37,7 @@ const login = (newUser) => {
 // logout user
 const logout = () => {
   localStorage.removeItem("x-access-token");
+  localStorage.removeItem("userId");
   return { msg: "Logout successfull." };
 };
 

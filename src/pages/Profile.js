@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import Footer from "../components/Footer";
@@ -11,6 +12,9 @@ import { logout } from "../services/auth.service";
 
 const Profile = () => {
   const navigate = useNavigate();
+
+  const userState = useSelector((state) => state.userReducer.user);
+  const { name } = userState;
 
   const route = () => {
     const token = localStorage.getItem("x-access-token");
@@ -30,7 +34,7 @@ const Profile = () => {
 
   const user = {
     userphoto: "https://avatars.githubusercontent.com/u/71883296?v=4",
-    name: "Abdur Nour Tanim",
+    name,
     collage: "University of Computer Science",
     address: {
       city: "Chattogram",
@@ -44,7 +48,7 @@ const Profile = () => {
 
   return (
     <div className="bg-gray-200 dark:bg-gray-800">
-      <Navbar />
+      <Navbar user />
       <ProfileOverlay />
       <section className="relative py-16 -mt-5 bg-gray-300 dark:bg-gray-900">
         <div className="container mx-auto px-4">

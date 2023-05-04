@@ -1,4 +1,7 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { updateUser } from "./container/userSlice";
 import Blog from "./pages/Blog";
 import BlogDetails from "./pages/BlogDetails";
 import Contact from "./pages/Contact";
@@ -10,14 +13,37 @@ import Profile from "./pages/Profile";
 import Signup from "./pages/Signup";
 import Update from "./pages/Update";
 import FAQ from "./pages/link/FAQ";
+import fetchUser from "./services/fetchUser.service";
 
 const App = () => {
+  const userState = useSelector((state) => state.userReducer.user);
+  const dispatch = useDispatch();
+  const userId = localStorage.getItem("userId");
+
+  useEffect(() => {
+    fetchUser(userId)
+      .then((res) => {
+        const user = res.data;
+        const { _id, name, email } = user;
+        dispatch(
+          updateUser({
+            ...userState,
+            userId: _id,
+            name,
+            email,
+          })
+        );
+      })
+      .catch((err) => console.log(err));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userId]);
+
   return (
     <BrowserRouter>
       <Routes>
         <Route element={<Login />} path="/login" />
         <Route element={<Signup />} path="/signup" />
-        <Route element={<Profile />} path="/profile" />
+        <Route element={<Profile />} path="/profile/:userId" />
         <Route element={<Contact />} path="/contact" />
         <Route element={<Update />} path="/update" />
         <Route element={<BlogDetails />} path="/blog-details" />
