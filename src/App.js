@@ -24,13 +24,16 @@ const App = () => {
     fetchUser(userId)
       .then((res) => {
         const user = res.data;
-        const { _id, name, email } = user;
+        const { _id, name, email, username, profile_picture } = user;
+        console.log(user);
         dispatch(
           updateUser({
             ...userState,
             userId: _id,
             name,
             email,
+            username,
+            profilePhoto: profile_picture,
           })
         );
       })
@@ -45,7 +48,7 @@ const App = () => {
         <Route element={<Signup />} path="/signup" />
         <Route element={<Profile />} path="/profile/:userId" />
         <Route element={<Contact />} path="/contact" />
-        <Route element={<Update />} path="/update" />
+        <Route element={<Update />} path="/update/:userId" />
         <Route element={<BlogDetails />} path="/blog-details" />
         <Route element={<Blog />} path="/blog" />
         <Route element={<CreateBlog />} path="/create-blog" />

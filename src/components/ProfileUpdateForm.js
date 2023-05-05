@@ -1,18 +1,51 @@
 import React, { useState } from "react";
 import { FaRegEdit } from "react-icons/fa";
 import { IoIosInformationCircleOutline } from "react-icons/io";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import userAvatar from "../assets/image/user_avatar.webp";
+import { updateUser } from "../container/userSlice";
 import convertToBase64 from "../helper/convert";
+import userUpdate from "../services/updateUser.service";
 import Button from "./Button";
 import InputBox from "./InputBox";
 
 const ProfileUpdateForm = () => {
+  const userState = useSelector((state) => state.userReducer.user);
+  const { userId, email, name, username, about, profilePhoto, coverPhoto } =
+    userState;
+  console.log(userState);
   const [file, setFile] = useState();
-  const [profileAvatar, setProfileAvatar] = useState();
+  const [userDetails, setUserDetails] = useState({
+    username: "" || username,
+    name: "" || name,
+    profilePhoto: profilePhoto,
+    about: " " || about,
+  });
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  console.log(userState);
+
+  const submitHandler = () => {
+    const { username, profilePhoto, about } = userDetails;
+    userUpdate(userId, {
+      username,
+      name,
+      profilePhoto,
+      userAbout: about,
+    })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+    dispatch(updateUser({ ...userState, username, name, profilePhoto, about }));
+    navigate(`/profile/${username || userId}`);
+  };
 
   const cover =
+    coverPhoto ||
     "https://cdn.tuk.dev/assets/webapp/forms/form_layouts/form1.jpg";
-  const avatar =
-    "https://cdn.tuk.dev/assets/webapp/forms/form_layouts/form2.jpg";
+  const avatar = profilePhoto || userAvatar;
 
   const coverChange = async (e) => {
     const base64 = await convertToBase64(e.target.files[0]);
@@ -21,7 +54,7 @@ const ProfileUpdateForm = () => {
 
   const profileChange = async (e) => {
     const base64 = await convertToBase64(e.target.files[0]);
-    setProfileAvatar(base64);
+    setUserDetails({ ...userDetails, profilePhoto: base64 });
   };
 
   return (
@@ -60,7 +93,7 @@ const ProfileUpdateForm = () => {
                 </label>
                 <div className="w-20 h-20 rounded-full bg-cover bg-center bg-no-repeat absolute bottom-0 -mb-10 ml-12 shadow flex items-center justify-center">
                   <img
-                    src={profileAvatar || avatar}
+                    src={userDetails.profilePhoto || avatar}
                     alt="avatar"
                     className="absolute z-0 h-full w-full object-cover rounded-full shadow top-0 left-0 bottom-0 right-0"
                   />
@@ -77,8 +110,8 @@ const ProfileUpdateForm = () => {
                       className="flex flex-col items-center"
                       htmlFor="profileImg"
                     >
-                      <FaRegEdit />
-                      <p className="text-xs text-gray-100">Edit Picture</p>
+                      <FaRegEdit className="text-gray-900" />
+                      <p className="text-xs text-gray-900">Edit Picture</p>
 
                       <input
                         hidden
@@ -98,7 +131,14 @@ const ProfileUpdateForm = () => {
                 >
                   Username
                 </label>
-                <InputBox className="dark:text-white" placeholder="@example" />
+                <InputBox
+                  className="dark:text-white"
+                  value={userDetails.username}
+                  onChange={(e) =>
+                    setUserDetails({ ...userDetails, username: e.target.value })
+                  }
+                  placeholder="@example"
+                />
               </div>
               <div className="mt-8 flex flex-col xl:w-3/5 lg:w-1/2 md:w-1/2 w-full">
                 <label
@@ -114,7 +154,10 @@ const ProfileUpdateForm = () => {
                   className=" h-36 px-8 py-4 rounded-lg font-medium text-black dark:text-white bg-gray-100 dark:bg-gray-900 border border-gray-200 dark:border-gray-600 placeholder-gray-500  text-sm focus:outline-none focus:border-gray-400 dark:focus:border-gray-200 focus:bg-white dark:focus:bg-black"
                   placeholder="Let the world know who you are"
                   rows={5}
-                  defaultValue={""}
+                  defaultValue={userDetails.about || about}
+                  onChange={(e) =>
+                    setUserDetails({ ...userDetails, about: e.target.value })
+                  }
                 />
                 <p className="w-full text-right text-xs pt-1 text-gray-500 dark:text-gray-400">
                   Character Limit: 200
@@ -152,16 +195,27 @@ const ProfileUpdateForm = () => {
                   className="border border-gray-300 dark:border-gray-700 pl-3 py-3 shadow-sm bg-transparent rounded text-sm focus:outline-none focus:border-indigo-700 placeholder-gray-500 text-gray-500 dark:text-gray-400"
                   placeholder
                 /> */}
-                  <InputBox className="dark:text-white" />
+                  <InputBox
+                    className="dark:text-white"
+                    value={userDetails.name}
+                    onChange={(e) =>
+                      setUserDetails({ ...userDetails, name: e.target.value })
+                    }
+                  />
                 </div>
                 <div className="xl:w-1/4 lg:w-1/2 md:w-1/2 flex flex-col mb-6 pl-0 md:pl-2">
                   <label
                     htmlFor="LastName"
                     className="pb-2 text-sm font-bold text-gray-800 dark:text-gray-100"
                   >
-                    Last Name
+                    Email
                   </label>
-                  <InputBox className="dark:text-white" />
+                  <InputBox
+                    className="dark:text-white bg-indigo-100 dark:bg-indigo-900"
+                    value={email}
+                    onChange={(e) => e.target.value}
+                    readOnly
+                  />
                 </div>
               </div>
               <div className="block md:flex items-center">
@@ -242,7 +296,9 @@ const ProfileUpdateForm = () => {
             <Button className="text-indigo-700 px-5 py-2 bg-white border  border-indigo-700 dark:border-indigo-100 dark:bg-gray-800 dark:text-white dark:hover:bg-indigo-700 dark:hover:border-gray-900 hover:text-white ">
               Cancle
             </Button>
-            <Button className="px-5 py-2 ml-2">Save</Button>
+            <Button onClick={submitHandler} className="px-5 py-2 ml-2">
+              Save
+            </Button>
           </div>
         </div>
       </div>

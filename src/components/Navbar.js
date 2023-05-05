@@ -3,6 +3,7 @@ import { FaBars } from "react-icons/fa";
 import { MdClose, MdDarkMode, MdOutlineLightMode } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { Link, useResolvedPath } from "react-router-dom";
+import userAvatar from '../assets/image/user_avatar.webp';
 import Logo from "./Logo";
 
 const Navbar = () => {
@@ -10,7 +11,7 @@ const Navbar = () => {
   const [toggleIcon, setToggleIcon] = useState(false);
   const { pathname } = useResolvedPath();
   const userState = useSelector((state) => state.userReducer.user);
-  const { userId, username } = userState;
+  const { userId, username,profilePhoto } = userState;
 
   const active =
     "bg-indigo-800 md:bg-transparent text-white md:text-blue-700 dark:md:text-indigo-300 hover:bg-indigo-800 my-2 md:my-0 -mx-2 md:-mx-0";
@@ -21,7 +22,7 @@ const Navbar = () => {
   };
 
   const user = route();
-  const userImg = "https://avatars.githubusercontent.com/u/71883296?v=4";
+  const userImg = profilePhoto || userAvatar
 
   const chageTheme = () => {
     setToggleIcon(!toggleIcon);

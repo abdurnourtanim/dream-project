@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import userAvatar from "../assets/image/user_avatar.webp";
 import Button from "../components/Button";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
@@ -14,7 +15,9 @@ const Profile = () => {
   const navigate = useNavigate();
 
   const userState = useSelector((state) => state.userReducer.user);
-  const { name } = userState;
+  const { name, profilePhoto, userId, username } = userState;
+
+  console.log(userState)
 
   const route = () => {
     const token = localStorage.getItem("x-access-token");
@@ -33,7 +36,7 @@ const Profile = () => {
   };
 
   const user = {
-    userphoto: "https://avatars.githubusercontent.com/u/71883296?v=4",
+    userphoto: profilePhoto || userAvatar,
     name,
     collage: "University of Computer Science",
     address: {
@@ -59,7 +62,9 @@ const Profile = () => {
                 <div className="md:flex w-full lg:w-4/12 px-0 md:px-4 lg:order-3 lg:text-right lg:self-center">
                   <div className="flex  justify-between py-0 md:py-6 px-0 md:px-3 mt-32  sm:mt-10">
                     <Button className="py-2 px-5">
-                      <Link to={`/update`}>Edit Profile</Link>
+                      <Link to={`/update/${username || userId}`}>
+                        Edit Profile
+                      </Link>
                     </Button>
                     <Button
                       onClick={logoutHandler}

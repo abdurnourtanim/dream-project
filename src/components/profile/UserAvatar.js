@@ -8,11 +8,14 @@ const UserAvatar = ({ userPhoto }) => {
           <img
             alt="user"
             src={userPhoto}
-            className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 cursor-pointer"
-            style={{ maxWidth: "150px" }}
+            className="shadow-xl rounded-full    align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 "
+            style={{
+              minWidth: "150px",
+              maxHeight: "150px",
+              objectFit: "cover",
+            }}
           />
         </label>
-        {/* <input type="file" name="profile" id="profile" hidden /> */}
       </div>
     </div>
   );
