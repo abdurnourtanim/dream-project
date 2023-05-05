@@ -1,10 +1,10 @@
 import axios from "axios";
-const baseURL = "https://dream-app.onrender.com/api";
+import { BASE_URL } from "../helper/url";
 
 // fetch single user by userId
 const fetchUser = (userId) => {
   return axios
-    .get(`${baseURL}/user/${userId}`)
+    .get(`${BASE_URL}/user/${userId}`)
     .then((response) => {
       if (response) {
         return Promise.resolve(response);

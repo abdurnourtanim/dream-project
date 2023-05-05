@@ -1,10 +1,10 @@
 import axios from "axios";
-const baseURL = "https://dream-app.onrender.com/api";
+import { BASE_URL } from "../helper/url";
 
 // signup
 const signup = (newUser) => {
   return axios
-    .post(`${baseURL}/signup`, newUser)
+    .post(`${BASE_URL}/signup`, newUser)
     .then((response) => {
       if (response) {
         return Promise.resolve(response);
@@ -18,7 +18,7 @@ const signup = (newUser) => {
 // login
 const login = (newUser) => {
   return axios
-    .post(`${baseURL}/login`, newUser)
+    .post(`${BASE_URL}/login`, newUser)
     .then((response) => {
       if (response) {
         const token = response.data.token;
