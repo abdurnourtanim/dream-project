@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseURL = "http://localhost:4000/api";
+const baseURL = process.env.BASE_URL;
 
 // fetch single user by userId
 const fetchUser = (userId) => {
