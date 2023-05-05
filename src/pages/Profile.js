@@ -17,7 +17,7 @@ const Profile = () => {
   const userState = useSelector((state) => state.userReducer.user);
   const { name, profilePhoto, userId, username } = userState;
 
-  console.log(userState)
+  console.log(userState);
 
   const route = () => {
     const token = localStorage.getItem("x-access-token");

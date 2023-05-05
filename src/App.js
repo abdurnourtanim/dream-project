@@ -21,23 +21,25 @@ const App = () => {
   const userId = localStorage.getItem("userId");
 
   useEffect(() => {
-    fetchUser(userId)
-      .then((res) => {
-        const user = res.data;
-        const { _id, name, email, username, profile_picture } = user;
-        console.log(user);
-        dispatch(
-          updateUser({
-            ...userState,
-            userId: _id,
-            name,
-            email,
-            username,
-            profilePhoto: profile_picture,
-          })
-        );
-      })
-      .catch((err) => console.log(err));
+    if (userId) {
+      fetchUser(userId)
+        .then((res) => {
+          const user = res.data;
+          const { _id, name, email, username, profile_picture } = user;
+          console.log(user);
+          dispatch(
+            updateUser({
+              ...userState,
+              userId: _id,
+              name,
+              email,
+              username,
+              profilePhoto: profile_picture,
+            })
+          );
+        })
+        .catch((err) => console.log(err));
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
 

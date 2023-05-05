@@ -17,10 +17,10 @@ const ProfileUpdateForm = () => {
   console.log(userState);
   const [file, setFile] = useState();
   const [userDetails, setUserDetails] = useState({
-    username: "" || username,
-    name: "" || name,
+    username: username,
+    name: name,
     profilePhoto: profilePhoto,
-    about: " " || about,
+    about: about,
   });
 
   const dispatch = useDispatch();
@@ -29,7 +29,10 @@ const ProfileUpdateForm = () => {
   console.log(userState);
 
   const submitHandler = () => {
-    const { username, profilePhoto, about } = userDetails;
+    const { username, profilePhoto, about, name } = userDetails;
+    // for redux-toolkit
+    dispatch(updateUser({ ...userState, username, name, profilePhoto, about }));
+    // for backend
     userUpdate(userId, {
       username,
       name,
@@ -38,7 +41,7 @@ const ProfileUpdateForm = () => {
     })
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
-    dispatch(updateUser({ ...userState, username, name, profilePhoto, about }));
+
     navigate(`/profile/${username || userId}`);
   };
 
