@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import loginSvg from "../assets/image/login.svg";
 import Navbar from "../components/Navbar";
 import SignupForm from "../components/SignupForm";
+import { updateUser } from "../container/userSlice";
 import { login, signup } from "../services/auth.service";
+import fetchUser from "../services/fetchUser.service";
 
 const Signup = () => {
   const [form, setForm] = useState({
@@ -15,6 +18,8 @@ const Signup = () => {
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const userState = useSelector((state) => state.userReducer.user);
 
   const route = () => {
     const token = localStorage.getItem("x-access-token");
@@ -44,7 +49,22 @@ const Signup = () => {
       .then(async (res) => {
         console.log(res);
         await login(newUser)
-          .then((res) => navigate("/"))
+          .then((res) => {
+            const userId = res.data.user._id;
+            console.log(res);
+
+            fetchUser(userId)
+              .then((res) => {
+                const user = res.data;
+                const { _id, name, email } = user;
+                dispatch(
+                  updateUser({ ...userState, userId: _id, name, email })
+                );
+              })
+              .catch((err) => console.log(err));
+
+            navigate("/");
+          })
           .catch((err) => console.log(err));
       })
       .catch((err) => {
