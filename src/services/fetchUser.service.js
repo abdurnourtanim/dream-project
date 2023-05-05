@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseURL = process.env.BASE_URL;
+const baseURL = "https://dream-app.onrender.com/api";
 
 // fetch single user by userId
 const fetchUser = (userId) => {
