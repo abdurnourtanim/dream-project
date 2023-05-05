@@ -14,7 +14,7 @@ const ProfileUpdateForm = () => {
   const userState = useSelector((state) => state.userReducer.user);
   const { userId, email, name, username, about, profilePhoto, coverPhoto } =
     userState;
-  console.log(userState);
+
   const [file, setFile] = useState();
   const [userDetails, setUserDetails] = useState({
     username: username,
@@ -136,7 +136,7 @@ const ProfileUpdateForm = () => {
                 </label>
                 <InputBox
                   className="dark:text-white"
-                  value={userDetails.username}
+                  value={userDetails.username || username}
                   onChange={(e) =>
                     setUserDetails({ ...userDetails, username: e.target.value })
                   }
