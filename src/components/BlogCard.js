@@ -3,7 +3,7 @@ import { BsArrowRight } from "react-icons/bs";
 import { Link } from "react-router-dom";
 
 const BlogCard = (props) => {
-  const { description, title, date, author, image, primary } = props;
+  const { description, title, date, author, image, primary, blogId } = props;
 
   return (
     <div>
@@ -32,7 +32,7 @@ const BlogCard = (props) => {
             : description.slice(0, 100).concat("...")}
         </p>
         <Link
-          to="/blog-details"
+          to={`/blog/${blogId}`}
           className="w-full mt-4 justify-end flex items-center cursor-pointer "
         >
           <p className="text-base tracking-wide text-indigo-500 dark:text-indigo-100">

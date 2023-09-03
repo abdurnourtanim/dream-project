@@ -1,10 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import BlogCard from "../components/BlogCard";
 import Button from "../components/Button";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import { updateBlog } from "../container/blogSlice";
+import { getBlogs } from "../services/blog.service";
 
 function Blog() {
+  const dispatch = useDispatch();
+  const blogState = useSelector((state) => state.blogReducer.blog);
+  console.log(blogState);
+
+  useEffect(() => {
+    const fetchAllBlogs = async () => {
+      await getBlogs()
+        .then((res) => {
+          dispatch(updateBlog(res.data));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+    fetchAllBlogs();
+  }, [dispatch]);
+
   return (
     <div>
       <Navbar />
@@ -15,48 +36,38 @@ function Blog() {
           </h1>
           <div className="mt-12 lg:mt-24">
             <div className="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-8">
-              <BlogCard
+              {/* <BlogCard
                 primary
-                image="https://cdn.tuk.dev/assets/components/111220/Blg-6/blog(1).png"
+                image={blogState[1].image}
                 author="Bruce Wayne"
-                date="13TH Oct, 2020"
-                title="Transactions"
-                description={`Find the latest events updates or create events, concerts,conferences, workshops, exhibitions, and cultural events in all cities of the US. The aim of Eventistan is to promote healthy and entertaining event.Find the latest events updates or create events, concerts, conferences, workshops,exhibitions, and cultural events in all cities of the US. The aim of Eventistan is to promote healthy and entertaining event.`}
-              />
+                date={blogState[0].date}
+                title={blogState[0].title}
+                description={blogState[0].description}
+              /> */}
               <div>
                 <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-3">
-                  <BlogCard
-                    image="https://cdn.tuk.dev/assets/components/111220/Blg-6/blog(1).png"
-                    author="Bruce Wayne"
-                    date="13TH Oct, 2020"
-                    title="Transactions"
-                    description={`Find the latest events updates or create events, concerts,conferences, workshops, exhibitions, and cultural events in all cities of the US. The aim of Eventistan is to promote healthy and entertaining event.Find the latest events updates or create events, concerts, conferences, workshops,exhibitions, and cultural events in all cities of the US. The aim of Eventistan is to promote healthy and entertaining event.`}
-                  />
-                  <BlogCard
-                    image="https://cdn.tuk.dev/assets/components/111220/Blg-6/blog(1).png"
-                    author="Bruce Wayne"
-                    date="13TH Oct, 2020"
-                    title="Transactions"
-                    description={`Find the latest events updates or create events, concerts,conferences, workshops, exhibitions, and cultural events in all cities of the US. The aim of Eventistan is to promote healthy and entertaining event.Find the latest events updates or create events, concerts, conferences, workshops,exhibitions, and cultural events in all cities of the US. The aim of Eventistan is to promote healthy and entertaining event.`}
-                  />
+                  {blogState.map((blog) => {
+                    console.log(blog);
+                    return (
+                      <BlogCard
+                        key={blog._id}
+                        image={blog.image}
+                        title={blog.title}
+                        description={blog.description}
+                        date={blog.date}
+                        author={blog.user}
+                        blogId={blog._id}
+                      />
+                    );
+                  })}
                 </div>
-                <div className="mt-5 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-3">
-                  <BlogCard
-                    image="https://cdn.tuk.dev/assets/components/111220/Blg-6/blog(1).png"
-                    author="Bruce Wayne"
-                    date="13TH Oct, 2020"
-                    title="Transactions"
-                    description={`Find the latest events updates or create events, concerts,conferences, workshops, exhibitions, and cultural events in all cities of the US. The aim of Eventistan is to promote healthy and entertaining event.Find the latest events updates or create events, concerts, conferences, workshops,exhibitions, and cultural events in all cities of the US. The aim of Eventistan is to promote healthy and entertaining event.`}
-                  />
-                  <BlogCard
-                    image="https://cdn.tuk.dev/assets/components/111220/Blg-6/blog(1).png"
-                    author="Bruce Wayne"
-                    date="13TH Oct, 2020"
-                    title="Transactions"
-                    description={`Find the latest events updates or create events, concerts,conferences, workshops, exhibitions, and cultural events in all cities of the US. The aim of Eventistan is to promote healthy and entertaining event.Find the latest events updates or create events, concerts, conferences, workshops,exhibitions, and cultural events in all cities of the US. The aim of Eventistan is to promote healthy and entertaining event.`}
-                  />
+
+                <div className="flex justify-center items-center ">
+                  <Button className="px-5 py-2 mt-5 ml-auto">See more</Button>
+                  <Button className="px-5 py-2 mt-5 ml-auto">
+                    <Link to={`/create-blog`}>Create Blog</Link>
+                  </Button>
                 </div>
-                <Button className="px-5 py-2 mt-5 ml-auto">See more</Button>
               </div>
             </div>
           </div>

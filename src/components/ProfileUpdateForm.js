@@ -94,7 +94,7 @@ const ProfileUpdateForm = () => {
                     name="coverImg"
                   />
                 </label>
-                <div className="w-20 h-20 rounded-full bg-cover bg-center bg-no-repeat absolute bottom-0 -mb-10 ml-12 shadow flex items-center justify-center">
+                <div className="w-20 h-20 rounded-full bg-cover bg-center bg-no-repeat absolute bottom-0 -mb-10 ml-12 shadow flex items-center justify-center cursor-pointer">
                   <img
                     src={userDetails.profilePhoto || avatar}
                     alt="avatar"

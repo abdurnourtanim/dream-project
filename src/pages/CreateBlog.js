@@ -2,14 +2,22 @@ import React, { useState } from "react";
 import { BsCardImage } from "react-icons/bs";
 import { MdCreate } from "react-icons/md";
 
+import { useDispatch, useSelector } from "react-redux";
 import Button from "../components/Button";
 import Footer from "../components/Footer";
 import InputBox from "../components/InputBox";
 import Navbar from "../components/Navbar";
+import { updateBlog } from "../container/blogSlice";
 import convertToBase64 from "../helper/convert";
+import { createBlog, getBlogs } from "../services/blog.service";
 
 const CreateBlog = () => {
   const [file, setFile] = useState();
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const dispatch = useDispatch();
+  const userState = useSelector((state) => state.userReducer.user);
+  console.log(userState.userId);
 
   const cover =
     "https://cdn.tuk.dev/assets/webapp/forms/form_layouts/form1.jpg";
@@ -17,6 +25,32 @@ const CreateBlog = () => {
   const coverChange = async (e) => {
     const base64 = await convertToBase64(e.target.files[0]);
     setFile(base64);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const newBlog = {
+      title,
+      description,
+      image: file,
+      user: userState.userId,
+    };
+
+    await createBlog(newBlog)
+      .then(async (res) => {
+        console.log(res);
+        await getBlogs()
+          .then((response) => {
+            dispatch(updateBlog(response.data));
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -60,7 +94,11 @@ const CreateBlog = () => {
                 >
                   Title
                 </label>
-                <InputBox className="dark:text-white" />
+                <InputBox
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  className="dark:text-white"
+                />
               </div>
               <div className="mt-8 flex flex-col w-full md:w-2/3">
                 <label
@@ -70,6 +108,8 @@ const CreateBlog = () => {
                   Description
                 </label>
                 <textarea
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
                   name="description"
                   required
                   className=" h-36 px-8 py-4 rounded-lg font-medium text-black dark:text-white bg-gray-100 dark:bg-gray-900 border border-gray-200 dark:border-gray-600 placeholder-gray-500  text-sm focus:outline-none focus:border-gray-400 dark:focus:border-gray-200 focus:bg-white dark:focus:bg-black"
@@ -81,7 +121,7 @@ const CreateBlog = () => {
 
           <div className="container mx-auto w-11/12 xl:w-full">
             <div className="w-full py-4 sm:px-0 bg-white dark:bg-gray-800 flex justify-end">
-              <Button className="px-5 py-2">
+              <Button onClick={handleSubmit} className="px-5 py-2">
                 <MdCreate className="mr-2" />
                 <span>Create</span>
               </Button>
