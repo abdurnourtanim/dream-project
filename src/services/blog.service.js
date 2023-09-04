@@ -1,9 +1,10 @@
 import axios from "axios";
+import { BASE_URL } from "../helper/url";
 
 // fetch all blogs
 const getBlogs = () => {
   return axios
-    .get(`http://localhost:4000/api/blogs`)
+    .get(`${BASE_URL}/blogs`)
     .then((response) => {
       if (response) {
         return Promise.resolve(response);
@@ -17,7 +18,7 @@ const getBlogs = () => {
 // fetch single blog
 const fetchSingleBlog = (blogId) => {
   return axios
-    .get(`http://localhost:4000/api/blog/${blogId}`)
+    .get(`${BASE_URL}/blog/${blogId}`)
     .then((response) => {
       if (response) {
         return Promise.resolve(response);
@@ -31,7 +32,7 @@ const fetchSingleBlog = (blogId) => {
 // Create a single blog
 const createBlog = (newBlog) => {
   return axios
-    .post("http://localhost:4000/api/createBlog", newBlog)
+    .post(`${BASE_URL}/createBlog`, newBlog)
     .then((response) => {
       if (response) {
         return Promise.resolve(response);
