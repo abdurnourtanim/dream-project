@@ -41,4 +41,4 @@ const logout = () => {
   return { msg: "Logout successfull." };
 };
 
-export { signup, login, logout };
+export { login, logout, signup };
