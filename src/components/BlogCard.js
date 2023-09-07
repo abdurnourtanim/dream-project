@@ -1,16 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BsArrowRight } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import fetchUser from "../services/fetchUser.service";
 
 const BlogCard = (props) => {
   const { description, title, date, author, image, primary, blogId } = props;
+  const [authorName, setAuthorName] = useState("");
+
+  useEffect(() => {
+    const fetchUserById = async () => {
+      await fetchUser(author)
+        .then((res) => {
+          console.log(res.data);
+          setAuthorName(res.data.name);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+    fetchUserById();
+  }, [author]);
 
   return (
     <div>
       <img className="w-full" src={image} alt={title} />
       <div className="py-4 px-4 w-full flex justify-between bg-indigo-700">
         <p className="text-sm text-white font-semibold tracking-wide">
-          {author}
+          {authorName}
         </p>
         <p className="text-sm text-white font-semibold tracking-wide">{date}</p>
       </div>

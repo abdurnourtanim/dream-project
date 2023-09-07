@@ -43,4 +43,16 @@ const createBlog = (newBlog) => {
     });
 };
 
-export { createBlog, fetchSingleBlog, getBlogs };
+// Delete single blog - only for blog author
+const deleteBlog = (blogId) => {
+  return axios
+    .delete(`${BASE_URL}/blog/${blogId}`)
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+export { createBlog, deleteBlog, fetchSingleBlog, getBlogs };

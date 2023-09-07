@@ -11,7 +11,6 @@ import { getBlogs } from "../services/blog.service";
 function Blog() {
   const dispatch = useDispatch();
   const blogState = useSelector((state) => state.blogReducer.blog);
-  console.log(blogState);
 
   useEffect(() => {
     const fetchAllBlogs = async () => {
@@ -48,6 +47,7 @@ function Blog() {
                 <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-3">
                   {blogState.map((blog) => {
                     console.log(blog);
+
                     return (
                       <BlogCard
                         key={blog._id}
