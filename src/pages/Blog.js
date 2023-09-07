@@ -11,7 +11,6 @@ import { getBlogs } from "../services/blog.service";
 function Blog() {
   const dispatch = useDispatch();
   const blogState = useSelector((state) => state.blogReducer.blog);
-  console.log(blogState);
 
   useEffect(() => {
     const fetchAllBlogs = async () => {
