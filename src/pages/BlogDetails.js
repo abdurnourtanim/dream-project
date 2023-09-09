@@ -1,48 +1,45 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Button from "../components/Button";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
-import { deleteBlog, fetchSingleBlog } from "../services/blog.service";
-import fetchUser from "../services/fetchUser.service";
+import { deleteBlog, getBlogs } from "../services/blog.service";
 
 const BlogDetails = () => {
-  const [blog, setBllog] = useState({});
+  const [blog, setBlog] = useState({
+    title: " ",
+    description: " ",
+    image: " ",
+    authorName: " ",
+    authorImage: " ",
+  });
+
   const { blogId } = useParams();
   const navigate = useNavigate();
+  const blogState = useSelector((state) => state.blogReducer.blog);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    fetchSingleBlog(blogId)
-      .then((res) => {
-        const { title, description, image } = res.data;
-        fetchUser(res.data?.user)
+    const searchBlog = blogState.filter((item) => item._id.includes(blogId));
+    const { title, description, image, author } = searchBlog[0];
+
+    const { image: authorImage, name: authorName } = author;
+
+    setBlog({ ...blog, title, description, image, authorName, authorImage });
+  }, [blogId, blogState]);
+
+  const deleteBlogHandle = async () => {
+    await deleteBlog(blogId)
+      .then(async (res) => {
+        await getBlogs()
           .then((res) => {
-            const { name, profile_picture } = res.data;
-            setBllog((state) => ({
-              ...state,
-              author: name,
-              authorImage: profile_picture,
-            }));
+            console.log(res);
+            navigate("/blog");
           })
           .catch((error) => {
             console.log(error);
           });
-        setBllog({
-          title,
-          description,
-          image,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [blogId]);
-
-  const deleteBlogHandle = async () => {
-    await deleteBlog(blogId)
-      .then((res) => {
-        console.log(res);
-        navigate("/blog");
       })
       .catch((error) => {
         console.log(error);
@@ -80,7 +77,7 @@ const BlogDetails = () => {
                   to="/profile"
                   className="font-medium text-black dark:text-indigo-100"
                 >
-                  {blog.author}
+                  {blog.authorName}
                 </Link>
               </div>
             </div>

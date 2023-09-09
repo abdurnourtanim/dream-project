@@ -1,29 +1,15 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import BlogCard from "../components/BlogCard";
 import Button from "../components/Button";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
-import { updateBlog } from "../container/blogSlice";
-import { getBlogs } from "../services/blog.service";
 
 function Blog() {
-  const dispatch = useDispatch();
   const blogState = useSelector((state) => state.blogReducer.blog);
 
-  useEffect(() => {
-    const fetchAllBlogs = async () => {
-      await getBlogs()
-        .then((res) => {
-          dispatch(updateBlog(res.data));
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    };
-    fetchAllBlogs();
-  }, [dispatch]);
+  console.log(blogState);
 
   return (
     <div>
@@ -46,8 +32,6 @@ function Blog() {
               <div>
                 <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-3">
                   {blogState.map((blog) => {
-                    console.log(blog);
-
                     return (
                       <BlogCard
                         key={blog._id}
@@ -55,7 +39,7 @@ function Blog() {
                         title={blog.title}
                         description={blog.description}
                         date={blog.date}
-                        author={blog.user}
+                        author={blog.author}
                         blogId={blog._id}
                       />
                     );
