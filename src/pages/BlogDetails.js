@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Button from "../components/Button";
 import Footer from "../components/Footer";
@@ -18,7 +18,6 @@ const BlogDetails = () => {
   const { blogId } = useParams();
   const navigate = useNavigate();
   const blogState = useSelector((state) => state.blogReducer.blog);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     const searchBlog = blogState.filter((item) => item._id.includes(blogId));
@@ -27,6 +26,7 @@ const BlogDetails = () => {
     const { image: authorImage, name: authorName } = author;
 
     setBlog({ ...blog, title, description, image, authorName, authorImage });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [blogId, blogState]);
 
   const deleteBlogHandle = async () => {
@@ -60,7 +60,7 @@ const BlogDetails = () => {
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center ">
               <img
-                src={`${blog.authorImage}`}
+                src={`${blog?.authorImage}`}
                 className="rounded-full mr-2 h-8"
                 alt="not-found"
                 loading="lazy"
