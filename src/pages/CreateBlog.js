@@ -3,6 +3,7 @@ import { BsCardImage } from "react-icons/bs";
 import { MdCreate } from "react-icons/md";
 
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import Footer from "../components/Footer";
 import InputBox from "../components/InputBox";
@@ -17,7 +18,7 @@ const CreateBlog = () => {
   const [description, setDescription] = useState("");
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.userReducer.user);
-  console.log(userState.userId);
+  const navigate = useNavigate();
 
   const cover =
     "https://cdn.tuk.dev/assets/webapp/forms/form_layouts/form1.jpg";
@@ -30,11 +31,14 @@ const CreateBlog = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const { name, profilePhoto } = userState;
+
     const newBlog = {
       title,
       description,
       image: file,
       user: userState.userId,
+      author: { name, image: profilePhoto },
     };
 
     await createBlog(newBlog)
@@ -42,7 +46,9 @@ const CreateBlog = () => {
         console.log(res);
         await getBlogs()
           .then((response) => {
+            console.log(response);
             dispatch(updateBlog(response.data));
+            navigate("/blog");
           })
           .catch((err) => {
             console.log(err);
