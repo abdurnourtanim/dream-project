@@ -9,8 +9,6 @@ import Navbar from "../components/Navbar";
 function Blog() {
   const blogState = useSelector((state) => state.blogReducer.blog);
 
-  console.log(blogState);
-
   return (
     <div>
       <Navbar />
@@ -21,14 +19,6 @@ function Blog() {
           </h1>
           <div className="mt-12 lg:mt-24">
             <div className="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-8">
-              {/* <BlogCard
-                primary
-                image={blogState[1].image}
-                author="Bruce Wayne"
-                date={blogState[0].date}
-                title={blogState[0].title}
-                description={blogState[0].description}
-              /> */}
               <div>
                 <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-3">
                   {blogState.map((blog) => {

@@ -5,14 +5,12 @@ import { Link } from "react-router-dom";
 const BlogCard = (props) => {
   const { description, title, date, author, image, primary, blogId } = props;
 
-  console.log(author);
-
   return (
     <div>
       <img className="w-full" src={image} alt={title} />
       <div className="py-4 px-4 w-full flex justify-between bg-indigo-700">
         <p className="text-sm text-white font-semibold tracking-wide">
-          {author?.name}
+          {author[0].name}
         </p>
         <p className="text-sm text-white font-semibold tracking-wide">{date}</p>
       </div>

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import userAvatar from "../assets/image/user_avatar.webp";
 import Button from "../components/Button";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import { updateBlog } from "../container/blogSlice";
 import { deleteBlog, getBlogs } from "../services/blog.service";
 
 const BlogDetails = () => {
@@ -13,35 +15,50 @@ const BlogDetails = () => {
     image: " ",
     authorName: " ",
     authorImage: " ",
+    authorId: "",
   });
+
+  const [loading, setLoading] = useState(false);
 
   const { blogId } = useParams();
   const navigate = useNavigate();
   const blogState = useSelector((state) => state.blogReducer.blog);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const searchBlog = blogState.filter((item) => item._id.includes(blogId));
     const { title, description, image, author } = searchBlog[0];
+    const { name, profilePhoto, userId } = author[0];
 
-    const { image: authorImage, name: authorName } = author;
-
-    setBlog({ ...blog, title, description, image, authorName, authorImage });
+    setBlog({
+      ...blog,
+      title,
+      description,
+      image,
+      authorName: name,
+      authorImage: profilePhoto,
+      authorId: userId,
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [blogId, blogState]);
+  }, [blogId]);
 
   const deleteBlogHandle = async () => {
+    setLoading(true);
     await deleteBlog(blogId)
       .then(async (res) => {
         await getBlogs()
           .then((res) => {
-            console.log(res);
+            dispatch(updateBlog(res.data));
             navigate("/blog");
           })
           .catch((error) => {
+            setLoading(false);
             console.log(error);
           });
+        setLoading(false);
       })
       .catch((error) => {
+        setLoading(false);
         console.log(error);
       });
   };
@@ -60,7 +77,7 @@ const BlogDetails = () => {
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center ">
               <img
-                src={`${blog?.authorImage}`}
+                src={`${blog.authorImage || userAvatar}`}
                 className="rounded-full mr-2 h-8"
                 alt="not-found"
                 loading="lazy"
@@ -74,7 +91,7 @@ const BlogDetails = () => {
                   by{" "}
                 </span>
                 <Link
-                  to="/profile"
+                  to={`/profile/${blog.authorId}`}
                   className="font-medium text-black dark:text-indigo-100"
                 >
                   {blog.authorName}
@@ -82,7 +99,7 @@ const BlogDetails = () => {
               </div>
             </div>
             <Button onClick={deleteBlogHandle} className="py-2 px-3">
-              <Link>Delete</Link>
+              <Link>{loading ? "Deleting..." : "Delete"}</Link>
             </Button>
           </div>
 

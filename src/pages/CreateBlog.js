@@ -13,6 +13,7 @@ import convertToBase64 from "../helper/convert";
 import { createBlog, getBlogs } from "../services/blog.service";
 
 const CreateBlog = () => {
+  const [loading, setLoading] = useState(false);
   const [file, setFile] = useState();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -30,31 +31,31 @@ const CreateBlog = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const { name, profilePhoto } = userState;
+    setLoading(true);
 
     const newBlog = {
       title,
       description,
       image: file,
       user: userState.userId,
-      author: { name, image: profilePhoto },
+      author: userState,
     };
 
     await createBlog(newBlog)
       .then(async (res) => {
-        console.log(res);
         await getBlogs()
           .then((response) => {
-            console.log(response);
             dispatch(updateBlog(response.data));
             navigate("/blog");
           })
           .catch((err) => {
+            setLoading(false);
             console.log(err);
           });
+        setLoading(false);
       })
       .catch((err) => {
+        setLoading(false);
         console.log(err);
       });
   };
@@ -129,7 +130,7 @@ const CreateBlog = () => {
             <div className="w-full py-4 sm:px-0 bg-white dark:bg-gray-800 flex justify-end">
               <Button onClick={handleSubmit} className="px-5 py-2">
                 <MdCreate className="mr-2" />
-                <span>Create</span>
+                <span>{loading ? "Creating..." : "Create"}</span>
               </Button>
             </div>
           </div>
