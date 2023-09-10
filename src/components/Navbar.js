@@ -3,7 +3,7 @@ import { FaBars } from "react-icons/fa";
 import { MdClose, MdDarkMode, MdOutlineLightMode } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { Link, useResolvedPath } from "react-router-dom";
-import userAvatar from '../assets/image/user_avatar.webp';
+import userAvatar from "../assets/image/user_avatar.webp";
 import Logo from "./Logo";
 
 const Navbar = () => {
@@ -11,7 +11,7 @@ const Navbar = () => {
   const [toggleIcon, setToggleIcon] = useState(false);
   const { pathname } = useResolvedPath();
   const userState = useSelector((state) => state.userReducer.user);
-  const { userId, username,profilePhoto } = userState;
+  const { userId, profilePhoto } = userState;
 
   const active =
     "bg-indigo-800 md:bg-transparent text-white md:text-blue-700 dark:md:text-indigo-300 hover:bg-indigo-800 my-2 md:my-0 -mx-2 md:-mx-0";
@@ -22,7 +22,7 @@ const Navbar = () => {
   };
 
   const user = route();
-  const userImg = profilePhoto || userAvatar
+  const userImg = profilePhoto || userAvatar;
 
   const chageTheme = () => {
     setToggleIcon(!toggleIcon);
@@ -59,7 +59,7 @@ const Navbar = () => {
           <div className="flex items-center">
             {user && (
               <Link
-                to={`/profile/${username || userId}`}
+                to={`/profile/${userId}`}
                 className="flex md:hidden mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
               >
                 <img
@@ -161,7 +161,7 @@ const Navbar = () => {
             <li>
               {user ? (
                 <Link
-                  to={`/profile/${username || userId}`}
+                  to={`/profile/${userId}`}
                   className="flex md:hidden bg-indigo-300 rounded-lg p-2 items-center "
                 >
                   <img
@@ -203,7 +203,7 @@ const Navbar = () => {
               )}
 
               <Link
-                to={`/profile/${username || userId}`}
+                to={`/profile/${userId}`}
                 className="hidden md:flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
               >
                 <img
