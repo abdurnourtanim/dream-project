@@ -15,7 +15,9 @@ const BlogDetails = () => {
     image: " ",
     authorName: " ",
     authorImage: " ",
+    authorId: "",
   });
+
   const [loading, setLoading] = useState(false);
 
   const { blogId } = useParams();
@@ -26,9 +28,17 @@ const BlogDetails = () => {
   useEffect(() => {
     const searchBlog = blogState.filter((item) => item._id.includes(blogId));
     const { title, description, image, author } = searchBlog[0];
-    const { image: authorImage, name: authorName } = author;
+    const { name, profilePhoto, userId } = author[0];
 
-    setBlog({ ...blog, title, description, image, authorName, authorImage });
+    setBlog({
+      ...blog,
+      title,
+      description,
+      image,
+      authorName: name,
+      authorImage: profilePhoto,
+      authorId: userId,
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [blogId]);
 
@@ -81,7 +91,7 @@ const BlogDetails = () => {
                   by{" "}
                 </span>
                 <Link
-                  to="/profile"
+                  to={`/profile/${blog.authorId}`}
                   className="font-medium text-black dark:text-indigo-100"
                 >
                   {blog.authorName}

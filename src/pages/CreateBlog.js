@@ -33,14 +33,12 @@ const CreateBlog = () => {
     e.preventDefault();
     setLoading(true);
 
-    const { name, profilePhoto } = userState;
-
     const newBlog = {
       title,
       description,
       image: file,
       user: userState.userId,
-      author: { name, image: profilePhoto },
+      author: userState,
     };
 
     await createBlog(newBlog)
