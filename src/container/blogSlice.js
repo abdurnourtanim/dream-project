@@ -9,7 +9,8 @@ export const blogSlice = createSlice({
   initialState: initialBlog,
   reducers: {
     updateBlog: (state, action) => {
-      state.blog = action.payload;
+      state.blog.push(action.payload);
+      // state.blog = action.payload;
     },
   },
 });
