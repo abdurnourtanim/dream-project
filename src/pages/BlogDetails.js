@@ -26,7 +26,9 @@ const BlogDetails = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const searchBlog = blogState.filter((item) => item._id.includes(blogId));
+    const searchBlog = blogState[0]?.filter((item) =>
+      item._id.includes(blogId)
+    );
     const { title, description, image, author } = searchBlog[0];
     const { name, profilePhoto, userId } = author[0];
 

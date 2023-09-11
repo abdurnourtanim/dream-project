@@ -4,13 +4,16 @@ import { IoIosInformationCircleOutline } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import userAvatar from "../assets/image/user_avatar.webp";
+import { updateBlog } from "../container/blogSlice";
 import { updateUser } from "../container/userSlice";
 import convertToBase64 from "../helper/convert";
+import { getBlogs } from "../services/blog.service";
 import userUpdate from "../services/updateUser.service";
 import Button from "./Button";
 import InputBox from "./InputBox";
 
 const ProfileUpdateForm = () => {
+  const [loading, setLoading] = useState(false);
   const userState = useSelector((state) => state.userReducer.user);
   const { userId, email, name, username, about, profilePhoto, coverPhoto } =
     userState;
@@ -26,10 +29,10 @@ const ProfileUpdateForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  console.log(userState);
-
   const submitHandler = () => {
+    setLoading(true);
     const { username, profilePhoto, about, name } = userDetails;
+
     // for redux-toolkit
     dispatch(updateUser({ ...userState, username, name, profilePhoto, about }));
     // for backend
@@ -39,8 +42,17 @@ const ProfileUpdateForm = () => {
       profilePhoto,
       userAbout: about,
     })
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+      .then(() => {
+        setLoading(false);
+        getBlogs().then((res) => {
+          dispatch(updateBlog(res.data));
+        });
+        navigate(`/profile/${userState.userId}`);
+      })
+      .catch((err) => {
+        setLoading(false);
+        console.log(err);
+      });
 
     navigate(`/profile/${username || userId}`);
   };
@@ -300,7 +312,7 @@ const ProfileUpdateForm = () => {
               Cancle
             </Button>
             <Button onClick={submitHandler} className="px-5 py-2 ml-2">
-              Save
+              {loading ? "Saving.." : "Save"}
             </Button>
           </div>
         </div>

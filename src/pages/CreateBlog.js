@@ -10,7 +10,7 @@ import InputBox from "../components/InputBox";
 import Navbar from "../components/Navbar";
 import { updateBlog } from "../container/blogSlice";
 import convertToBase64 from "../helper/convert";
-import { createBlog, getBlogs } from "../services/blog.service";
+import { createBlog } from "../services/blog.service";
 
 const CreateBlog = () => {
   const [loading, setLoading] = useState(false);
@@ -19,7 +19,10 @@ const CreateBlog = () => {
   const [description, setDescription] = useState("");
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.userReducer.user);
+  const blogState = useSelector((state) => state.blogReducer.blog);
   const navigate = useNavigate();
+
+  console.log(blogState);
 
   const cover =
     "https://cdn.tuk.dev/assets/webapp/forms/form_layouts/form1.jpg";
@@ -43,15 +46,11 @@ const CreateBlog = () => {
 
     await createBlog(newBlog)
       .then(async (res) => {
-        await getBlogs()
-          .then((response) => {
-            dispatch(updateBlog(response.data));
-            navigate("/blog");
-          })
-          .catch((err) => {
-            setLoading(false);
-            console.log(err);
-          });
+        const createdBlog = res.data;
+
+        dispatch(updateBlog(createdBlog));
+
+        navigate("/blog");
         setLoading(false);
       })
       .catch((err) => {
