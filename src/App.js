@@ -53,7 +53,10 @@ const App = () => {
       await getBlogs()
         .then((res) => {
           const fetchBlog = res.data;
-          dispatch(updateBlog(fetchBlog));
+
+          for (let i = 0; i < fetchBlog.length; i++) {
+            dispatch(updateBlog(fetchBlog[i]));
+          }
         })
         .catch((error) => {
           console.log(error);

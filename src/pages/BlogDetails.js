@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import userAvatar from "../assets/image/user_avatar.webp";
 import Button from "../components/Button";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
-import { updateBlog } from "../container/blogSlice";
-import { deleteBlog, getBlogs } from "../services/blog.service";
+import { deleteBlog } from "../services/blog.service";
 
 const BlogDetails = () => {
   const [blog, setBlog] = useState({
@@ -22,16 +21,15 @@ const BlogDetails = () => {
 
   const { blogId } = useParams();
   const navigate = useNavigate();
-  const blogState = useSelector((state) => state.blogReducer.blog);
-  const dispatch = useDispatch();
+  let blogState = useSelector((state) => state.blogReducer.blog);
+  // const dispatch = useDispatch();
+
+  console.log(blogState);
 
   useEffect(() => {
-    const searchBlog = blogState[0]?.filter((item) =>
-      item._id.includes(blogId)
-    );
+    const searchBlog = blogState?.filter((item) => item?._id.includes(blogId));
     const { title, description, image, author } = searchBlog[0];
     const { name, profilePhoto, userId } = author[0];
-
     setBlog({
       ...blog,
       title,
@@ -46,17 +44,12 @@ const BlogDetails = () => {
 
   const deleteBlogHandle = async () => {
     setLoading(true);
+    // delete blog from database
     await deleteBlog(blogId)
       .then(async (res) => {
-        await getBlogs()
-          .then((res) => {
-            dispatch(updateBlog(res.data));
-            navigate("/blog");
-          })
-          .catch((error) => {
-            setLoading(false);
-            console.log(error);
-          });
+        // delte blog from redux store
+
+        navigate("/blog");
         setLoading(false);
       })
       .catch((error) => {
