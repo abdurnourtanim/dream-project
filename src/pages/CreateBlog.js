@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { BsCardImage } from "react-icons/bs";
 import { MdCreate } from "react-icons/md";
 
-import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
@@ -21,11 +20,6 @@ const CreateBlog = () => {
   const userState = useSelector((state) => state.userReducer.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const alert = useAlert();
-
-  const showAlert = (message) => {
-    alert.show(message);
-  };
 
   const cover =
     "https://cdn.tuk.dev/assets/webapp/forms/form_layouts/form1.jpg";
@@ -51,11 +45,10 @@ const CreateBlog = () => {
       .then(async (res) => {
         const data = res.data;
         const createdBlog = data?.blog;
-        const message = data?.message;
+        // const message = data?.message;
 
         dispatch(updateBlog(createdBlog));
 
-        showAlert(message);
         setLoading(false);
         navigate("/blog");
       })
