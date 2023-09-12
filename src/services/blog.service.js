@@ -47,11 +47,11 @@ const createBlog = (newBlog) => {
 const deleteBlog = (blogId) => {
   return axios
     .delete(`${BASE_URL}/blog/${blogId}`)
-    .then((res) => {
-      console.log(res);
+    .then((response) => {
+      return Promise.resolve(response);
     })
     .catch((error) => {
-      console.log(error);
+      return Promise.reject(error);
     });
 };
 

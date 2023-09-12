@@ -52,7 +52,7 @@ const App = () => {
     const fetchAllBlogs = async () => {
       await getBlogs()
         .then((res) => {
-          const fetchBlog = res.data;
+          const fetchBlog = res.data.blogs;
 
           for (let i = 0; i < fetchBlog.length; i++) {
             dispatch(updateBlog(fetchBlog[i]));

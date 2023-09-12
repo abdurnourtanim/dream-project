@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { BsCardImage } from "react-icons/bs";
 import { MdCreate } from "react-icons/md";
 
+import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
@@ -17,12 +18,14 @@ const CreateBlog = () => {
   const [file, setFile] = useState();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const dispatch = useDispatch();
   const userState = useSelector((state) => state.userReducer.user);
-  const blogState = useSelector((state) => state.blogReducer.blog);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const alert = useAlert();
 
-  console.log(blogState);
+  const showAlert = (message) => {
+    alert.show(message);
+  };
 
   const cover =
     "https://cdn.tuk.dev/assets/webapp/forms/form_layouts/form1.jpg";
@@ -46,12 +49,15 @@ const CreateBlog = () => {
 
     await createBlog(newBlog)
       .then(async (res) => {
-        const createdBlog = res.data;
+        const data = res.data;
+        const createdBlog = data?.blog;
+        const message = data?.message;
 
         dispatch(updateBlog(createdBlog));
 
-        navigate("/blog");
+        showAlert(message);
         setLoading(false);
+        navigate("/blog");
       })
       .catch((err) => {
         setLoading(false);
