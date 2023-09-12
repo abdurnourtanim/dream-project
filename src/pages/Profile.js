@@ -34,8 +34,8 @@ const Profile = () => {
 
   useEffect(() => {
     const authorId = params.userId;
-    const searchBlog = blogState[0]?.filter((item) => {
-      const author = item.author[0];
+    const searchBlog = blogState?.filter((item) => {
+      const author = item?.author[0];
       return author.userId.includes(authorId);
     });
 

@@ -5,7 +5,7 @@ const initialBlog = {
 };
 
 export const blogSlice = createSlice({
-  name: "userSlice",
+  name: "blogSlice",
   initialState: initialBlog,
   reducers: {
     updateBlog: (state, action) => {
@@ -15,5 +15,5 @@ export const blogSlice = createSlice({
   },
 });
 
-export const { updateBlog } = blogSlice.actions;
+export const { updateBlog, removeBlog } = blogSlice.actions;
 export default blogSlice.reducer;
