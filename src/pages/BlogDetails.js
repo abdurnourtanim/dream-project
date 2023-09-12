@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import userAvatar from "../assets/image/user_avatar.webp";
 import Button from "../components/Button";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import { removeBlog } from "../container/blogSlice";
 import { deleteBlog } from "../services/blog.service";
 
 const BlogDetails = () => {
@@ -22,9 +23,7 @@ const BlogDetails = () => {
   const { blogId } = useParams();
   const navigate = useNavigate();
   let blogState = useSelector((state) => state.blogReducer.blog);
-  // const dispatch = useDispatch();
-
-  console.log(blogState);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const searchBlog = blogState?.filter((item) => item?._id.includes(blogId));
@@ -48,6 +47,7 @@ const BlogDetails = () => {
     await deleteBlog(blogId)
       .then(async (res) => {
         // delte blog from redux store
+        dispatch(removeBlog(blogId));
 
         navigate("/blog");
         setLoading(false);
