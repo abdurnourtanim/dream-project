@@ -10,7 +10,14 @@ export const blogSlice = createSlice({
   reducers: {
     updateBlog: (state, action) => {
       state.blog.push(action.payload);
-      // state.blog = action.payload;
+    },
+    removeBlog: (state, action) => {
+      state.blog.filter((blog, index) => {
+        if (blog._id === action.payload) {
+          state.blog.splice(index, 1);
+        }
+        return blog.state;
+      });
     },
   },
 });
