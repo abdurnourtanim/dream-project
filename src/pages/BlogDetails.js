@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import userAvatar from "../assets/image/user_avatar.webp";
@@ -17,13 +18,16 @@ const BlogDetails = () => {
     authorImage: " ",
     authorId: "",
   });
-
   const [loading, setLoading] = useState(false);
-
+  let blogState = useSelector((state) => state.blogReducer.blog);
   const { blogId } = useParams();
   const navigate = useNavigate();
-  let blogState = useSelector((state) => state.blogReducer.blog);
   const dispatch = useDispatch();
+  const alert = useAlert();
+
+  const showAlert = (message) => {
+    alert.show(message);
+  };
 
   useEffect(() => {
     const searchBlog = blogState?.filter((item) => item?._id.includes(blogId));
@@ -46,11 +50,13 @@ const BlogDetails = () => {
     // delete blog from database
     await deleteBlog(blogId)
       .then(async (res) => {
+        const message = res.data?.message;
         // delte blog from redux store
         dispatch(removeBlog(blogId));
 
-        navigate("/blog");
+        showAlert(message);
         setLoading(false);
+        navigate("/blog");
       })
       .catch((error) => {
         setLoading(false);
