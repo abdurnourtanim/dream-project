@@ -1,4 +1,5 @@
 import React from "react";
+import { useAlert } from "react-alert";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import BlogCard from "../components/BlogCard";
@@ -8,6 +9,11 @@ import Navbar from "../components/Navbar";
 
 function Blog() {
   const blogState = useSelector((state) => state.blogReducer.blog);
+  const alert = useAlert();
+
+  const alertHandle = () => {
+    alert.success("info");
+  };
 
   return (
     <div>
@@ -37,7 +43,12 @@ function Blog() {
                 </div>
 
                 <div className="flex justify-center items-center ">
-                  <Button className="px-5 py-2 mt-5 ml-auto">See more</Button>
+                  <Button
+                    onClick={alertHandle}
+                    className="px-5 py-2 mt-5 ml-auto"
+                  >
+                    See more
+                  </Button>
                   <Button className="px-5 py-2 mt-5 ml-auto">
                     <Link to={`/create-blog`}>Create Blog</Link>
                   </Button>
