@@ -19,6 +19,7 @@ const BlogDetails = () => {
   });
   const [loading, setLoading] = useState(false);
   let blogState = useSelector((state) => state.blogReducer.blog);
+  const userState = useSelector((state) => state.userReducer.user);
   const { blogId } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -92,9 +93,12 @@ const BlogDetails = () => {
                 </Link>
               </div>
             </div>
-            <Button onClick={deleteBlogHandle} className="py-2 px-3">
-              <Link>{loading ? "Deleting..." : "Delete"}</Link>
-            </Button>
+
+            {blog.authorId === userState.userId && (
+              <Button onClick={deleteBlogHandle} className="py-2 px-3">
+                <Link>{loading ? "Deleting..." : "Delete"}</Link>
+              </Button>
+            )}
           </div>
 
           <h1 className="font-bold text-3xl mb-6 text-black dark:text-gray-100">
